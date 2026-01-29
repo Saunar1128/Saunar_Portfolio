@@ -176,6 +176,49 @@ body {
     margin: 0 auto;
     font-size: 4rem;
     color: white;
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(251, 191, 36, 0.4);
+}
+
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.profile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 2rem;
+    color: white;
+}
+
+.profile-img:hover .profile-overlay {
+    opacity: 1;
+}
+
+.profile-img:hover img {
+    filter: brightness(0.7);
 }
 
 /* Section Styles */
@@ -237,6 +280,49 @@ body {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     font-size: 5rem;
     color: #6366f1;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 40px -5px rgba(0, 0, 0, 0.15);
+}
+
+.about-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: -1rem;
+    transition: all 0.3s ease;
+}
+
+.about-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(99, 102, 241, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 3rem;
+    color: white;
+}
+
+.about-card:hover .about-overlay {
+    opacity: 1;
+}
+
+.about-card:hover img {
+    filter: brightness(0.8);
+    transform: scale(1.05);
 }
 
 /* Skills Section */
