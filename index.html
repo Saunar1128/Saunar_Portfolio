@@ -26,19 +26,42 @@
 
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1 class="typewriter-title">
-                <span class="typewriter-text">Hi, I'm Abram Saunar,</span>
-                <span class="cursor-blink">|</span>
-            </h1>
-            <h2 class="animated-subtitle">Student Developer</h2>
-            <p class="animated-tagline">Building solutions with code and creativity</p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn primary glow-btn">View Projects</a>
-                <a href="#contact" class="btn secondary glow-btn">Contact Me</a>
+            <div class="hero-text">
+                <h1 class="typewriter-title">
+                    <span class="typewriter-text">Hi, I'm Abram Saunar,</span>
+                    <span class="cursor-blink">|</span>
+                </h1>
+                <h2 class="animated-subtitle">Student Developer</h2>
+                <p class="animated-tagline">Building solutions with code and creativity</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn primary glow-btn">View Projects</a>
+                    <a href="#contact" class="btn secondary glow-btn">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-profile">
+                <div class="profile-container" onclick="openProfileModal()">
+                    <img src="img/profile.png" alt="Abram Saunar" class="profile-image">
+                    <div class="profile-overlay">
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="particles"></div>
     </section>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProfileModal()">&times;</span>
+            <img src="img/profile.png" alt="Abram Saunar" class="modal-image">
+            <div class="modal-actions">
+                <a href="img/profile.png" download="Abram_Saunar_Profile.png" class="download-btn">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </div>
+        </div>
+    </div>
 
     <section id="about" class="about">
         <div class="container">

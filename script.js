@@ -1,3 +1,29 @@
+// Profile Modal Functions
+function openProfileModal() {
+    document.getElementById('profileModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeProfileModal() {
+    document.getElementById('profileModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('profileModal');
+    if (event.target === modal) {
+        closeProfileModal();
+    }
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeProfileModal();
+    }
+});
+
 // Advanced Typewriter Effect
 class TypewriterEffect {
     constructor() {
