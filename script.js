@@ -30,7 +30,7 @@ class TypewriterEffect {
         this.textElement = document.querySelector('.typewriter-text');
         this.cursorElement = document.querySelector('.cursor-blink');
         this.texts = [
-            'Hi, I\'m Abram Saunar,',
+            'Hi, I\'m Abram Saunar',
             'a Software Developer'
         ];
         this.currentTextIndex = 0;
