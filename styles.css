@@ -10,6 +10,26 @@ body {
     color: #ffffff;
     overflow-x: hidden;
     background: #0a0a0a;
+    cursor: none;
+}
+
+/* Custom Cursor */
+.cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(0, 123, 255, 0.8) 0%, rgba(0, 191, 255, 0.4) 70%, transparent 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.6);
+}
+
+.cursor.hover {
+    transform: scale(2);
+    background: radial-gradient(circle, rgba(0, 191, 255, 1) 0%, rgba(0, 123, 255, 0.6) 70%, transparent 100%);
+    box-shadow: 0 0 30px rgba(0, 191, 255, 0.8);
 }
 
 /* Animated Background */
@@ -102,30 +122,104 @@ body {
     justify-content: center;
     text-align: center;
     position: relative;
+    overflow: hidden;
 }
 
-.hero-content h1 {
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.05) 0%, transparent 50%, rgba(0, 191, 255, 0.05) 100%);
+    animation: heroGradient 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroGradient {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.7; }
+}
+
+.animated-title {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
     opacity: 0;
-    animation: fadeInUp 1s ease forwards;
+    animation: typeWriter 3s ease forwards;
+    text-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #007bff;
+    width: 0;
 }
 
-.hero-content h2 {
+.animated-subtitle {
     font-size: 1.5rem;
     color: #007bff;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     opacity: 0;
-    animation: fadeInUp 1s ease 0.2s forwards;
+    animation: fadeInUp 1s ease 2s forwards;
+    text-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
 }
 
-.hero-content p {
+.animated-tagline {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     max-width: 600px;
     opacity: 0;
-    animation: fadeInUp 1s ease 0.4s forwards;
+    animation: fadeInUp 1s ease 2.5s forwards;
+    color: #e0e0e0;
+}
+
+@keyframes typeWriter {
+    0% {
+        width: 0;
+        opacity: 1;
+    }
+    90% {
+        width: 100%;
+        border-right: 2px solid #007bff;
+    }
+    100% {
+        width: 100%;
+        border-right: none;
+        opacity: 1;
+    }
+}
+
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(0, 123, 255, 0.6);
+    border-radius: 50%;
+    animation: float 6s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+    }
 }
 
 .highlight {
@@ -138,7 +232,55 @@ body {
     gap: 1rem;
     justify-content: center;
     opacity: 0;
-    animation: fadeInUp 1s ease 0.6s forwards;
+    animation: fadeInUp 1s ease 3s forwards;
+}
+
+.glow-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.glow-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.glow-btn:hover::before {
+    left: 100%;
+}
+
+.btn.primary {
+    background: linear-gradient(45deg, #007bff, #00bfff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    border: 2px solid transparent;
+}
+
+.btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 123, 255, 0.8), 0 6px 20px rgba(0, 123, 255, 0.4);
+    border: 2px solid rgba(0, 191, 255, 0.5);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: #007bff;
+    border: 2px solid #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+}
+
+.btn.secondary:hover {
+    background: rgba(0, 123, 255, 0.1);
+    color: #00bfff;
+    border: 2px solid #00bfff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
 }
 
 .btn {
@@ -149,31 +291,6 @@ body {
     transition: all 0.3s ease;
     display: inline-block;
 }
-
-.btn.primary {
-    background: linear-gradient(45deg, #007bff, #00bfff);
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-}
-
-.btn.primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
-}
-
-.btn.secondary {
-    background: transparent;
-    color: #007bff;
-    border: 2px solid #007bff;
-}
-
-.btn.secondary:hover {
-    background: #007bff;
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* Sections */
 section {
     padding: 100px 0;
     position: relative;
@@ -218,13 +335,33 @@ h2 {
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, rgba(0, 123, 255, 0.3), transparent);
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
 }
 
 .skill-card:hover {
     transform: translateY(-10px);
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 123, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1), 0 0 20px rgba(0, 123, 255, 0.2);
+}
+
+.skill-card:hover::before {
+    opacity: 1;
 }
 
 .skill-card i {
@@ -262,12 +399,31 @@ h2 {
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.2), rgba(0, 191, 255, 0.2), rgba(0, 123, 255, 0.2));
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
 }
 
 .project-card:hover {
     transform: translateY(-10px);
     border: 1px solid rgba(0, 123, 255, 0.3);
-    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.1), 0 0 30px rgba(0, 123, 255, 0.2);
+}
+
+.project-card:hover::before {
+    opacity: 1;
 }
 
 .project-image {
@@ -347,13 +503,33 @@ h2 {
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-link::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.3), rgba(0, 191, 255, 0.3), rgba(0, 123, 255, 0.3));
+    border-radius: 50px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
 }
 
 .contact-link:hover {
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 123, 255, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.1), 0 0 20px rgba(0, 123, 255, 0.3);
+}
+
+.contact-link:hover::before {
+    opacity: 1;
 }
 
 .contact-link i {
@@ -371,7 +547,69 @@ h2 {
     color: #888;
 }
 
-/* Animations */
+/* Cursor Trail Animation */
+.cursor-trail {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 123, 255, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.1s ease;
+}
+
+/* Enhanced Glow Effects */
+.nav-logo:hover {
+    text-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #00bfff;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+/* Project Image Glow */
+.project-image {
+    height: 200px;
+    background: linear-gradient(45deg, #007bff, #00bfff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0, 191, 255, 0.2), transparent, rgba(0, 123, 255, 0.2));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-image::before {
+    opacity: 1;
+}
+
+.project-image i {
+    font-size: 4rem;
+    color: white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.project-card:hover .project-image i {
+    transform: scale(1.1);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+}
 @keyframes fadeInUp {
     from {
         opacity: 0;

@@ -1,4 +1,87 @@
-// Smooth scrolling for navigation links
+// Custom Cursor
+class CustomCursor {
+    constructor() {
+        this.cursor = document.createElement('div');
+        this.cursor.className = 'cursor';
+        document.body.appendChild(this.cursor);
+        
+        this.trails = [];
+        this.maxTrails = 8;
+        
+        this.init();
+    }
+    
+    init() {
+        // Create cursor trails
+        for (let i = 0; i < this.maxTrails; i++) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.opacity = (1 - i / this.maxTrails) * 0.5;
+            document.body.appendChild(trail);
+            this.trails.push({ element: trail, x: 0, y: 0 });
+        }
+        
+        // Mouse move event
+        document.addEventListener('mousemove', (e) => {
+            this.cursor.style.left = e.clientX - 10 + 'px';
+            this.cursor.style.top = e.clientY - 10 + 'px';
+            
+            // Update trails with delay
+            this.trails.forEach((trail, index) => {
+                setTimeout(() => {
+                    trail.element.style.left = e.clientX - 3 + 'px';
+                    trail.element.style.top = e.clientY - 3 + 'px';
+                }, index * 20);
+            });
+        });
+        
+        // Hover effects for all interactive elements
+        const hoverElements = document.querySelectorAll('a, button, .skill-card, .project-card, .contact-link, .nav-menu a, .nav-logo');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                this.cursor.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                this.cursor.classList.remove('hover');
+            });
+        });
+    }
+}
+
+// Particle System
+class ParticleSystem {
+    constructor() {
+        this.container = document.querySelector('.particles');
+        this.particles = [];
+        this.maxParticles = 50;
+        
+        this.init();
+    }
+    
+    init() {
+        for (let i = 0; i < this.maxParticles; i++) {
+            this.createParticle();
+        }
+    }
+    
+    createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        
+        this.container.appendChild(particle);
+        
+        // Remove and recreate particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+                this.createParticle();
+            }
+        }, 6000);
+    }
+}
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -114,8 +197,41 @@ class CodingRain {
     }
 }
 
-// Initialize coding rain effect
+// Enhanced Button Glow Effects
 document.addEventListener('DOMContentLoaded', () => {
+    // Add enhanced glow to buttons on interaction
+    document.querySelectorAll('.glow-btn').forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+            if (this.classList.contains('primary')) {
+                this.style.boxShadow = '0 0 40px rgba(0, 123, 255, 1), 0 6px 20px rgba(0, 123, 255, 0.4)';
+            } else {
+                this.style.boxShadow = '0 0 30px rgba(0, 191, 255, 0.8)';
+            }
+        });
+        
+        btn.addEventListener('mouseleave', function() {
+            if (this.classList.contains('primary')) {
+                this.style.boxShadow = '0 4px 15px rgba(0, 123, 255, 0.3)';
+            } else {
+                this.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.2)';
+            }
+        });
+    });
+    
+    // Add pulse animation to highlight text
+    const highlight = document.querySelector('.highlight');
+    if (highlight) {
+        setInterval(() => {
+            highlight.style.textShadow = '0 0 30px rgba(0, 123, 255, 0.8)';
+            setTimeout(() => {
+                highlight.style.textShadow = '0 0 15px rgba(0, 123, 255, 0.4)';
+            }, 1000);
+        }, 3000);
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    new CustomCursor();
+    new ParticleSystem();
     new CodingRain();
 });
 
