@@ -13,7 +13,7 @@
 
 /* Smooth transitions for all interactive elements */
 a, button, .skill-card, .project-card, .contact-link, .nav-menu a, .nav-logo, .profile-container {
-    will-change: transform, box-shadow, border-color;
+    will-change: transform;
     backface-visibility: hidden;
     transform: translateZ(0);
 }
@@ -370,8 +370,9 @@ body {
     color: #e0e0e0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     line-height: 1.6;
-    margin-left: 2rem;
+    margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
 .particles {
@@ -519,36 +520,15 @@ h2 {
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    transition: transform 0.1s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
 }
 
-.skill-card::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, transparent, rgba(0, 123, 255, 0.2), transparent);
-    border-radius: 15px;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-    z-index: -1;
-}
-
 .skill-card:hover {
-    transform: translateY(-3px);
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(0, 123, 255, 0.3);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
-}
-
-.skill-card:hover::before {
-    opacity: 1;
+    transform: translateY(-2px);
 }
 
 .skill-card i {
@@ -583,34 +563,14 @@ h2 {
     backdrop-filter: blur(10px);
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    transition: transform 0.1s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     position: relative;
 }
 
-.project-card::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, rgba(0, 123, 255, 0.1), rgba(0, 191, 255, 0.1), rgba(0, 123, 255, 0.1));
-    border-radius: 15px;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-    z-index: -1;
-}
-
 .project-card:hover {
-    transform: translateY(-3px);
-    border: 1px solid rgba(0, 123, 255, 0.3);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
-}
-
-.project-card:hover::before {
-    opacity: 1;
+    transform: translateY(-2px);
 }
 
 .project-image {
