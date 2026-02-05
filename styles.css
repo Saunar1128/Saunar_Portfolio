@@ -125,67 +125,101 @@ body {
     overflow: hidden;
 }
 
-.hero::before {
-    content: '';
+.hero-banner {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(0, 123, 255, 0.05) 0%, transparent 50%, rgba(0, 191, 255, 0.05) 100%);
-    animation: heroGradient 8s ease-in-out infinite alternate;
+    z-index: -1;
 }
 
-@keyframes heroGradient {
-    0% { opacity: 0.3; }
-    100% { opacity: 0.7; }
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.3) contrast(1.2);
 }
 
-.animated-title {
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(0, 123, 255, 0.15) 0%,
+        rgba(0, 0, 0, 0.4) 30%,
+        rgba(0, 0, 0, 0.6) 70%,
+        rgba(0, 191, 255, 0.15) 100%
+    );
+    animation: overlayPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes overlayPulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 2rem;
+}
+
+.typewriter-title {
     font-size: 3.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
-    opacity: 0;
-    animation: typeWriter 3s ease forwards;
-    text-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid #007bff;
-    width: 0;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(0, 123, 255, 0.5), 0 4px 8px rgba(0, 0, 0, 0.8);
+    min-height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.typewriter-text {
+    color: #ffffff;
+}
+
+.highlight {
+    color: #00bfff;
+    text-shadow: 0 0 20px rgba(0, 191, 255, 0.8);
+}
+
+.cursor-blink {
+    color: #00bfff;
+    animation: blink 1s infinite;
+    font-weight: 300;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
 }
 
 .animated-subtitle {
-    font-size: 1.5rem;
-    color: #007bff;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #00bfff;
+    margin-bottom: 1.5rem;
     opacity: 0;
-    animation: fadeInUp 1s ease 2s forwards;
-    text-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+    animation: fadeInUp 1s ease 4s forwards;
+    text-shadow: 0 0 15px rgba(0, 191, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .animated-tagline {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
     max-width: 600px;
     opacity: 0;
-    animation: fadeInUp 1s ease 2.5s forwards;
+    animation: fadeInUp 1s ease 4.5s forwards;
     color: #e0e0e0;
-}
-
-@keyframes typeWriter {
-    0% {
-        width: 0;
-        opacity: 1;
-    }
-    90% {
-        width: 100%;
-        border-right: 2px solid #007bff;
-    }
-    100% {
-        width: 100%;
-        border-right: none;
-        opacity: 1;
-    }
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    line-height: 1.6;
 }
 
 .particles {
@@ -229,10 +263,11 @@ body {
 
 .hero-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
     opacity: 0;
-    animation: fadeInUp 1s ease 3s forwards;
+    animation: fadeInUp 1s ease 5s forwards;
+    flex-wrap: wrap;
 }
 
 .glow-btn {

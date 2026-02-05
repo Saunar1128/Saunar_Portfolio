@@ -1,3 +1,54 @@
+// Advanced Typewriter Effect
+class TypewriterEffect {
+    constructor() {
+        this.textElement = document.querySelector('.typewriter-text');
+        this.cursorElement = document.querySelector('.cursor-blink');
+        this.texts = [
+            'Hi, I\'m Abram Saunar,',
+            'a Software Developer'
+        ];
+        this.currentTextIndex = 0;
+        this.currentCharIndex = 0;
+        this.isDeleting = false;
+        this.typeSpeed = 100;
+        this.deleteSpeed = 50;
+        this.pauseTime = 2000;
+        
+        this.init();
+    }
+    
+    init() {
+        setTimeout(() => {
+            this.type();
+        }, 500);
+    }
+    
+    type() {
+        const currentText = this.texts[this.currentTextIndex];
+        
+        if (this.isDeleting) {
+            this.textElement.textContent = currentText.substring(0, this.currentCharIndex - 1);
+            this.currentCharIndex--;
+        } else {
+            this.textElement.textContent = currentText.substring(0, this.currentCharIndex + 1);
+            this.currentCharIndex++;
+        }
+        
+        let typeSpeedCurrent = this.isDeleting ? this.deleteSpeed : this.typeSpeed;
+        
+        if (!this.isDeleting && this.currentCharIndex === currentText.length) {
+            typeSpeedCurrent = this.pauseTime;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.currentCharIndex === 0) {
+            this.isDeleting = false;
+            this.currentTextIndex = (this.currentTextIndex + 1) % this.texts.length;
+            typeSpeedCurrent = 500;
+        }
+        
+        setTimeout(() => this.type(), typeSpeedCurrent);
+    }
+}
+
 // Custom Cursor
 class CustomCursor {
     constructor() {
@@ -230,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 document.addEventListener('DOMContentLoaded', () => {
+    new TypewriterEffect();
     new CustomCursor();
     new ParticleSystem();
     new CodingRain();
