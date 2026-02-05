@@ -16,9 +16,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+        navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+        navbar.style.borderBottom = '1px solid rgba(0, 123, 255, 0.2)';
     } else {
-        navbar.style.background = 'rgba(10, 10, 10, 0.9)';
+        navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+        navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
     }
 });
 
@@ -33,7 +35,7 @@ class CodingRain {
         this.canvas.style.width = '100%';
         this.canvas.style.height = '100%';
         this.canvas.style.zIndex = '-1';
-        this.canvas.style.opacity = '0.3';
+        this.canvas.style.opacity = '0.4';
         
         document.body.appendChild(this.canvas);
         
@@ -50,7 +52,7 @@ class CodingRain {
     resize() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.columns = Math.floor(this.canvas.width / 20);
+        this.columns = Math.floor(this.canvas.width / 25);
         this.init();
     }
     
@@ -59,37 +61,52 @@ class CodingRain {
         for (let i = 0; i < this.columns; i++) {
             this.drops[i] = {
                 y: Math.random() * this.canvas.height,
-                speed: Math.random() * 3 + 1,
-                opacity: Math.random() * 0.5 + 0.1
+                speed: Math.random() * 2 + 0.5,
+                opacity: Math.random() * 0.3 + 0.1,
+                char: this.characters[Math.floor(Math.random() * this.characters.length)]
             };
         }
     }
     
     animate() {
-        this.ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+        // Clear with black background
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        this.ctx.font = '14px monospace';
+        this.ctx.font = '12px "Courier New", monospace';
         
         for (let i = 0; i < this.drops.length; i++) {
             const drop = this.drops[i];
-            const char = this.characters[Math.floor(Math.random() * this.characters.length)];
+            const x = i * 25;
             
-            // Create gradient effect
-            const gradient = this.ctx.createLinearGradient(0, drop.y - 20, 0, drop.y + 20);
-            gradient.addColorStop(0, `rgba(0, 123, 255, 0)`);
-            gradient.addColorStop(0.5, `rgba(0, 191, 255, ${drop.opacity})`);
-            gradient.addColorStop(1, `rgba(0, 123, 255, 0)`);
+            // White outline effect
+            this.ctx.strokeStyle = `rgba(255, 255, 255, ${drop.opacity * 0.3})`;
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeText(drop.char, x, drop.y);
             
-            this.ctx.fillStyle = gradient;
-            this.ctx.fillText(char, i * 20, drop.y);
+            // Blue glow effect
+            this.ctx.fillStyle = `rgba(0, 123, 255, ${drop.opacity})`;
+            this.ctx.fillText(drop.char, x, drop.y);
+            
+            // Add subtle glow
+            this.ctx.shadowColor = 'rgba(0, 123, 255, 0.5)';
+            this.ctx.shadowBlur = 3;
+            this.ctx.fillText(drop.char, x, drop.y);
+            this.ctx.shadowBlur = 0;
             
             drop.y += drop.speed;
             
-            if (drop.y > this.canvas.height) {
+            // Reset drop when it goes off screen
+            if (drop.y > this.canvas.height + 20) {
                 drop.y = -20;
-                drop.speed = Math.random() * 3 + 1;
-                drop.opacity = Math.random() * 0.5 + 0.1;
+                drop.speed = Math.random() * 2 + 0.5;
+                drop.opacity = Math.random() * 0.3 + 0.1;
+                drop.char = this.characters[Math.floor(Math.random() * this.characters.length)];
+            }
+            
+            // Occasionally change character
+            if (Math.random() < 0.01) {
+                drop.char = this.characters[Math.floor(Math.random() * this.characters.length)];
             }
         }
         

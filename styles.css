@@ -19,7 +19,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    background: #000000;
     z-index: -2;
 }
 
@@ -31,15 +31,14 @@ body {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 50%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(0, 123, 255, 0.05) 0%, transparent 50%);
-    animation: pulse 4s ease-in-out infinite alternate;
+        radial-gradient(circle at 25% 25%, rgba(0, 123, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(0, 191, 255, 0.02) 0%, transparent 50%);
+    animation: subtlePulse 6s ease-in-out infinite alternate;
 }
 
-@keyframes pulse {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; }
+@keyframes subtlePulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.6; }
 }
 
 /* Navigation */
@@ -47,8 +46,9 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(10, 10, 10, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 1000;
     padding: 1rem 0;
     transition: all 0.3s ease;
@@ -67,6 +67,7 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     color: #007bff;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
 }
 
 .nav-menu {
@@ -187,8 +188,10 @@ h2 {
 
 /* About Section */
 .about {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .about-text p {
@@ -207,25 +210,28 @@ h2 {
 }
 
 .skill-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
     transition: all 0.3s ease;
-    border: 1px solid rgba(0, 123, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .skill-card:hover {
     transform: translateY(-10px);
-    background: rgba(0, 123, 255, 0.1);
-    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
 }
 
 .skill-card i {
     font-size: 3rem;
     color: #007bff;
     margin-bottom: 1rem;
+    text-shadow: 0 0 15px rgba(0, 123, 255, 0.4);
 }
 
 .skill-card h3 {
@@ -235,8 +241,10 @@ h2 {
 
 /* Projects Section */
 .projects {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .projects-grid {
@@ -247,17 +255,19 @@ h2 {
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
-    border: 1px solid rgba(0, 123, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .project-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.2);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.1);
 }
 
 .project-image {
@@ -331,27 +341,31 @@ h2 {
     text-decoration: none;
     font-size: 1.1rem;
     padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
     border-radius: 50px;
     transition: all 0.3s ease;
-    border: 1px solid rgba(0, 123, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .contact-link:hover {
-    background: rgba(0, 123, 255, 0.1);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 123, 255, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.1);
 }
 
 .contact-link i {
     font-size: 1.2rem;
     color: #007bff;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
 }
 
 /* Footer */
 .footer {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
     padding: 2rem 0;
     color: #888;
