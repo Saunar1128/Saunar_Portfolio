@@ -57,36 +57,33 @@ class CustomCursor {
         document.body.appendChild(this.cursor);
         
         this.trails = [];
-        this.maxTrails = 8;
+        this.maxTrails = 3; // Reduced from 8 to 3
+        this.mouseX = 0;
+        this.mouseY = 0;
         
         this.init();
     }
     
     init() {
-        // Create cursor trails
+        // Create fewer cursor trails for better performance
         for (let i = 0; i < this.maxTrails; i++) {
             const trail = document.createElement('div');
             trail.className = 'cursor-trail';
-            trail.style.opacity = (1 - i / this.maxTrails) * 0.5;
+            trail.style.opacity = (1 - i / this.maxTrails) * 0.4;
             document.body.appendChild(trail);
             this.trails.push({ element: trail, x: 0, y: 0 });
         }
         
-        // Mouse move event
+        // Optimized mouse move event with requestAnimationFrame
         document.addEventListener('mousemove', (e) => {
-            this.cursor.style.left = e.clientX - 10 + 'px';
-            this.cursor.style.top = e.clientY - 10 + 'px';
-            
-            // Update trails with delay
-            this.trails.forEach((trail, index) => {
-                setTimeout(() => {
-                    trail.element.style.left = e.clientX - 3 + 'px';
-                    trail.element.style.top = e.clientY - 3 + 'px';
-                }, index * 20);
-            });
+            this.mouseX = e.clientX;
+            this.mouseY = e.clientY;
         });
         
-        // Hover effects for all interactive elements
+        // Use requestAnimationFrame for smooth cursor updates
+        this.updateCursor();
+        
+        // Hover effects for interactive elements
         const hoverElements = document.querySelectorAll('a, button, .skill-card, .project-card, .contact-link, .nav-menu a, .nav-logo');
         hoverElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
@@ -96,6 +93,30 @@ class CustomCursor {
                 this.cursor.classList.remove('hover');
             });
         });
+    }
+    
+    updateCursor() {
+        // Update main cursor position
+        this.cursor.style.left = this.mouseX - 10 + 'px';
+        this.cursor.style.top = this.mouseY - 10 + 'px';
+        
+        // Update trails with smooth interpolation
+        this.trails.forEach((trail, index) => {
+            const delay = (index + 1) * 0.1;
+            const targetX = this.mouseX - 3;
+            const targetY = this.mouseY - 3;
+            
+            const currentX = parseFloat(trail.element.style.left) || targetX;
+            const currentY = parseFloat(trail.element.style.top) || targetY;
+            
+            const newX = currentX + (targetX - currentX) * (0.2 - delay * 0.05);
+            const newY = currentY + (targetY - currentY) * (0.2 - delay * 0.05);
+            
+            trail.element.style.left = newX + 'px';
+            trail.element.style.top = newY + 'px';
+        });
+        
+        requestAnimationFrame(() => this.updateCursor());
     }
 }
 

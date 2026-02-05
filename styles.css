@@ -22,14 +22,27 @@ body {
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s ease;
+    transition: transform 0.15s ease;
     box-shadow: 0 0 20px rgba(0, 123, 255, 0.6);
+    will-change: transform;
 }
 
 .cursor.hover {
-    transform: scale(2);
+    transform: scale(1.5);
     background: radial-gradient(circle, rgba(0, 191, 255, 1) 0%, rgba(0, 123, 255, 0.6) 70%, transparent 100%);
-    box-shadow: 0 0 30px rgba(0, 191, 255, 0.8);
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.8);
+}
+
+/* Cursor Trail Animation */
+.cursor-trail {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 123, 255, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.1s ease;
 }
 
 /* Animated Background */
@@ -125,35 +138,14 @@ body {
     overflow: hidden;
 }
 
-.hero-banner {
+.hero::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-}
-
-.banner-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.3) contrast(1.2);
-}
-
-.banner-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        45deg,
-        rgba(0, 123, 255, 0.15) 0%,
-        rgba(0, 0, 0, 0.4) 30%,
-        rgba(0, 0, 0, 0.6) 70%,
-        rgba(0, 191, 255, 0.15) 100%
-    );
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.05) 0%, transparent 50%, rgba(0, 191, 255, 0.05) 100%);
     animation: overlayPulse 8s ease-in-out infinite alternate;
 }
 
