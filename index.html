@@ -14,23 +14,15 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <svg class="logo-svg" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+                <svg class="logo-svg" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" style="stop-color:#007bff;stop-opacity:1" />
                             <stop offset="100%" style="stop-color:#00bfff;stop-opacity:1" />
                         </linearGradient>
                     </defs>
-                    <!-- Code bracket -->
-                    <path d="M 8 10 L 2 20 L 8 30" stroke="url(#logoGradient)" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    <!-- AJVS Letters -->
-                    <text x="15" y="28" font-family="'Courier New', monospace" font-size="24" font-weight="bold" fill="#ffffff" letter-spacing="2">AJVS</text>
-                    <!-- Code bracket -->
-                    <path d="M 112 10 L 118 20 L 112 30" stroke="url(#logoGradient)" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    <!-- Cursor line -->
-                    <line x1="105" y1="12" x2="105" y2="28" stroke="#00bfff" stroke-width="2" opacity="0.8">
-                        <animate attributeName="opacity" values="0.8;0;0.8" dur="1s" repeatCount="indefinite"/>
-                    </line>
+                    <!-- Combined AJVS Letters -->
+                    <text x="5" y="28" font-family="'Courier New', monospace" font-size="26" font-weight="bold" fill="url(#logoGradient)" letter-spacing="-2">AJVS</text>
                 </svg>
             </div>
             <ul class="nav-menu">
@@ -44,24 +36,43 @@
     </nav>
 
     <section id="home" class="hero">
-        <div class="hero-banner">
-            <img src="img/banner.jpg" alt="Hero Banner" class="banner-image">
-            <div class="banner-overlay"></div>
-        </div>
         <div class="hero-content">
-            <h1 class="typewriter-title">
-                <span class="typewriter-text">Hi, I'm Abram Saunar</span>
-                <span class="cursor-blink">|</span>
-            </h1>
-            <h2 class="animated-subtitle">Student Developer</h2>
-            <p class="animated-tagline">Building solutions with code and creativity</p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn primary glow-btn">View Projects</a>
-                <a href="#contact" class="btn secondary glow-btn">Contact Me</a>
+            <div class="hero-text">
+                <h1 class="typewriter-title">
+                    <span class="typewriter-text">Hi, I'm Abram Saunar</span>
+                    <span class="cursor-blink">|</span>
+                </h1>
+                <h2 class="animated-subtitle">Software Developer</h2>
+                <p class="animated-tagline">Building solutions with code and creativity</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn primary glow-btn">View Projects</a>
+                    <a href="#contact" class="btn secondary glow-btn">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-profile">
+                <div class="profile-container" onclick="openProfileModal()">
+                    <img src="img/profile.png" alt="Abram Saunar" class="profile-image">
+                    <div class="profile-overlay">
+                        <i class="fas fa-expand-alt"></i>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="particles"></div>
     </section>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProfileModal()">&times;</span>
+            <img src="img/profile.png" alt="Abram Saunar" class="modal-image">
+            <div class="modal-actions">
+                <a href="img/profile.png" download="Abram_Saunar_Profile.png" class="download-btn">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </div>
+        </div>
+    </div>
 
     <section id="about" class="about">
         <div class="container">
