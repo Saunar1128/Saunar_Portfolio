@@ -11,6 +11,7 @@ function closeProfileModal() {
 
 // Flip Card Function
 function flipCard(card) {
+    event.stopPropagation();
     card.classList.toggle('flipped');
 }
 
