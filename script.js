@@ -9,6 +9,11 @@ function closeProfileModal() {
     document.body.style.overflow = 'auto';
 }
 
+// Flip Card Function
+function flipCard(card) {
+    card.classList.toggle('flipped');
+}
+
 // Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('profileModal');
