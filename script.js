@@ -88,65 +88,35 @@ class CustomCursor {
         this.cursor.className = 'cursor';
         document.body.appendChild(this.cursor);
         
-        this.trails = [];
-        this.maxTrails = 3; // Reduced from 8 to 3
         this.mouseX = 0;
         this.mouseY = 0;
+        this.cursorX = 0;
+        this.cursorY = 0;
         
         this.init();
     }
     
     init() {
-        // Create fewer cursor trails for better performance
-        for (let i = 0; i < this.maxTrails; i++) {
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.style.opacity = (1 - i / this.maxTrails) * 0.4;
-            document.body.appendChild(trail);
-            this.trails.push({ element: trail, x: 0, y: 0 });
-        }
-        
-        // Optimized mouse move event with requestAnimationFrame
         document.addEventListener('mousemove', (e) => {
             this.mouseX = e.clientX;
             this.mouseY = e.clientY;
         });
         
-        // Use requestAnimationFrame for smooth cursor updates
         this.updateCursor();
         
-        // Hover effects for interactive elements
         const hoverElements = document.querySelectorAll('a, button, .skill-card, .project-card, .contact-link, .nav-menu a, .nav-logo');
         hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                this.cursor.classList.add('hover');
-            });
-            el.addEventListener('mouseleave', () => {
-                this.cursor.classList.remove('hover');
-            });
+            el.addEventListener('mouseenter', () => this.cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => this.cursor.classList.remove('hover'));
         });
     }
     
     updateCursor() {
-        // Update main cursor position
-        this.cursor.style.left = this.mouseX - 10 + 'px';
-        this.cursor.style.top = this.mouseY - 10 + 'px';
+        this.cursorX += (this.mouseX - this.cursorX) * 0.15;
+        this.cursorY += (this.mouseY - this.cursorY) * 0.15;
         
-        // Update trails with smooth interpolation
-        this.trails.forEach((trail, index) => {
-            const delay = (index + 1) * 0.1;
-            const targetX = this.mouseX - 3;
-            const targetY = this.mouseY - 3;
-            
-            const currentX = parseFloat(trail.element.style.left) || targetX;
-            const currentY = parseFloat(trail.element.style.top) || targetY;
-            
-            const newX = currentX + (targetX - currentX) * (0.2 - delay * 0.05);
-            const newY = currentY + (targetY - currentY) * (0.2 - delay * 0.05);
-            
-            trail.element.style.left = newX + 'px';
-            trail.element.style.top = newY + 'px';
-        });
+        this.cursor.style.left = this.cursorX - 10 + 'px';
+        this.cursor.style.top = this.cursorY - 10 + 'px';
         
         requestAnimationFrame(() => this.updateCursor());
     }
@@ -157,7 +127,7 @@ class ParticleSystem {
     constructor() {
         this.container = document.querySelector('.particles');
         this.particles = [];
-        this.maxParticles = 50;
+        this.maxParticles = 20;
         
         this.init();
     }
@@ -173,17 +143,16 @@ class ParticleSystem {
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
         particle.style.animationDelay = Math.random() * 6 + 's';
-        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
         
         this.container.appendChild(particle);
         
-        // Remove and recreate particle after animation
         setTimeout(() => {
             if (particle.parentNode) {
                 particle.parentNode.removeChild(particle);
                 this.createParticle();
             }
-        }, 6000);
+        }, 8000);
     }
 }
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -222,16 +191,19 @@ class CodingRain {
         this.canvas.style.width = '100%';
         this.canvas.style.height = '100%';
         this.canvas.style.zIndex = '-1';
-        this.canvas.style.opacity = '0.4';
+        this.canvas.style.opacity = '0.3';
         
         document.body.appendChild(this.canvas);
         
-        this.characters = '01{}[]()<>/\\;:.,ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        this.characters = '01{}[]';
         this.drops = [];
+        this.lastTime = 0;
+        this.fps = 30;
+        this.fpsInterval = 1000 / this.fps;
         
         this.resize();
         this.init();
-        this.animate();
+        this.animate(0);
         
         window.addEventListener('resize', () => this.resize());
     }
@@ -239,7 +211,7 @@ class CodingRain {
     resize() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.columns = Math.floor(this.canvas.width / 25);
+        this.columns = Math.floor(this.canvas.width / 30);
         this.init();
     }
     
@@ -248,90 +220,65 @@ class CodingRain {
         for (let i = 0; i < this.columns; i++) {
             this.drops[i] = {
                 y: Math.random() * this.canvas.height,
-                speed: Math.random() * 2 + 0.5,
-                opacity: Math.random() * 0.3 + 0.1,
+                speed: Math.random() * 1.5 + 0.5,
+                opacity: Math.random() * 0.2 + 0.1,
                 char: this.characters[Math.floor(Math.random() * this.characters.length)]
             };
         }
     }
     
-    animate() {
-        // Clear with black background
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    animate(currentTime) {
+        requestAnimationFrame((time) => this.animate(time));
+        
+        const elapsed = currentTime - this.lastTime;
+        if (elapsed < this.fpsInterval) return;
+        
+        this.lastTime = currentTime - (elapsed % this.fpsInterval);
+        
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        this.ctx.font = '12px "Courier New", monospace';
+        this.ctx.font = '14px "Courier New", monospace';
         
         for (let i = 0; i < this.drops.length; i++) {
             const drop = this.drops[i];
-            const x = i * 25;
+            const x = i * 30;
             
-            // White outline effect
-            this.ctx.strokeStyle = `rgba(255, 255, 255, ${drop.opacity * 0.3})`;
-            this.ctx.lineWidth = 1;
-            this.ctx.strokeText(drop.char, x, drop.y);
-            
-            // Blue glow effect
             this.ctx.fillStyle = `rgba(0, 123, 255, ${drop.opacity})`;
             this.ctx.fillText(drop.char, x, drop.y);
             
-            // Add subtle glow
-            this.ctx.shadowColor = 'rgba(0, 123, 255, 0.5)';
-            this.ctx.shadowBlur = 3;
-            this.ctx.fillText(drop.char, x, drop.y);
-            this.ctx.shadowBlur = 0;
-            
             drop.y += drop.speed;
             
-            // Reset drop when it goes off screen
             if (drop.y > this.canvas.height + 20) {
                 drop.y = -20;
-                drop.speed = Math.random() * 2 + 0.5;
-                drop.opacity = Math.random() * 0.3 + 0.1;
+                drop.speed = Math.random() * 1.5 + 0.5;
+                drop.opacity = Math.random() * 0.2 + 0.1;
                 drop.char = this.characters[Math.floor(Math.random() * this.characters.length)];
             }
             
-            // Occasionally change character
-            if (Math.random() < 0.01) {
+            if (Math.random() < 0.02) {
                 drop.char = this.characters[Math.floor(Math.random() * this.characters.length)];
             }
         }
-        
-        requestAnimationFrame(() => this.animate());
     }
 }
 
 // Enhanced Button Glow Effects
 document.addEventListener('DOMContentLoaded', () => {
-    // Add enhanced glow to buttons on interaction
+    // Simplified button effects
     document.querySelectorAll('.glow-btn').forEach(btn => {
         btn.addEventListener('mouseenter', function() {
             if (this.classList.contains('primary')) {
-                this.style.boxShadow = '0 0 40px rgba(0, 123, 255, 1), 0 6px 20px rgba(0, 123, 255, 0.4)';
-            } else {
-                this.style.boxShadow = '0 0 30px rgba(0, 191, 255, 0.8)';
+                this.style.boxShadow = '0 0 25px rgba(0, 123, 255, 0.8)';
             }
         });
         
         btn.addEventListener('mouseleave', function() {
             if (this.classList.contains('primary')) {
                 this.style.boxShadow = '0 4px 15px rgba(0, 123, 255, 0.3)';
-            } else {
-                this.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.2)';
             }
         });
     });
-    
-    // Add pulse animation to highlight text
-    const highlight = document.querySelector('.highlight');
-    if (highlight) {
-        setInterval(() => {
-            highlight.style.textShadow = '0 0 30px rgba(0, 123, 255, 0.8)';
-            setTimeout(() => {
-                highlight.style.textShadow = '0 0 15px rgba(0, 123, 255, 0.4)';
-            }, 1000);
-        }, 3000);
-    }
 });
 document.addEventListener('DOMContentLoaded', () => {
     new TypewriterEffect();
@@ -351,6 +298,7 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
@@ -385,24 +333,31 @@ function typeWriter(element, text, speed = 100) {
 // Add glowing effect to buttons
 document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('mouseenter', function() {
-        this.style.boxShadow = '0 0 20px rgba(0, 123, 255, 0.5)';
+        if (this.classList.contains('primary')) {
+            this.style.boxShadow = '0 0 15px rgba(0, 123, 255, 0.4)';
+        }
     });
     
     btn.addEventListener('mouseleave', function() {
         if (this.classList.contains('primary')) {
             this.style.boxShadow = '0 4px 15px rgba(0, 123, 255, 0.3)';
-        } else {
-            this.style.boxShadow = 'none';
         }
     });
 });
 
 // Parallax effect for hero section
+let ticking = false;
 window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero-content');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+            ticking = false;
+        });
+        ticking = true;
     }
 });
 

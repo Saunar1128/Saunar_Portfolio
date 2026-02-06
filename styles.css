@@ -13,9 +13,7 @@
 
 /* Smooth transitions for all interactive elements */
 a, button, .skill-card, .project-card, .contact-link, .nav-menu a, .nav-logo, .profile-container {
-    will-change: transform;
     backface-visibility: hidden;
-    transform: translateZ(0);
 }
 
 body {
@@ -534,12 +532,11 @@ h2 {
     height: 200px;
     cursor: pointer;
     pointer-events: auto;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .skill-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    filter: drop-shadow(0 0 25px rgba(0, 123, 255, 0.8)) drop-shadow(0 0 40px rgba(0, 191, 255, 0.4));
+    transform: translateY(-5px);
 }
 
 .skill-card-inner {
@@ -581,7 +578,6 @@ h2 {
     backdrop-filter: blur(10px);
     transform: rotateY(180deg);
     border: 1px solid rgba(0, 191, 255, 0.5);
-    box-shadow: 0 0 30px rgba(0, 123, 255, 0.4);
     pointer-events: auto;
 }
 
@@ -589,13 +585,7 @@ h2 {
     font-size: 3rem;
     color: #007bff;
     margin-bottom: 1rem;
-    text-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
-    transition: all 0.3s ease;
-}
-
-.skill-card:hover .skill-card-front i {
-    text-shadow: 0 0 30px rgba(0, 123, 255, 1), 0 0 50px rgba(0, 191, 255, 0.6);
-    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 }
 
 .skill-card-front h3 {
