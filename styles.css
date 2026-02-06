@@ -125,6 +125,20 @@ body {
     color: #007bff;
     text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.logo-svg {
+    height: 40px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(0, 123, 255, 0.3));
+    transition: all 0.2s ease;
+}
+
+.nav-logo:hover .logo-svg {
+    filter: drop-shadow(0 0 15px rgba(0, 191, 255, 0.6));
+    transform: scale(1.05);
 }
 
 .nav-menu {
